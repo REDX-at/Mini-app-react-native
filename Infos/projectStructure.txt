@@ -1,0 +1,23 @@
+/src
+  /app
+    AppNavigator.tsx           // Root: AuthStack <-> AppTabs + Product stack screen
+    AuthGate.tsx               // Switches stacks based on auth state
+  /screens
+    LoginScreen.tsx
+    HomeScreen.tsx
+    ProductDetailsScreen.tsx
+    PlaceholderScreen.tsx
+  /components
+    ProductCard.tsx
+    GlobalModal.tsx            // Centralized modal (Reanimated)
+  /store
+    index.ts                   // configureStore
+    hooks.ts                   // typed useAppDispatch/useAppSelector
+    authSlice.ts
+    productsSlice.ts
+    uiSlice.ts                 // modal manager (open/close + payload)
+  /services
+    api.ts                     // axios instance + interceptors (refresh)
+    productsApi.ts             // thin wrappers if you like
+  /types
+    api.ts, product.ts, auth.ts

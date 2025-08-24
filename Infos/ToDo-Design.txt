@@ -1,0 +1,106 @@
+1. App Name
+
+Since it’s a product browsing app with login, pagination, and editing, you want something neutral but modern.
+
+👉 Suggested name: “Shoply”
+(short, professional, fits e-commerce/product listing theme).
+
+2. UI Design Plan
+Navigation Flow
+
+AuthStack
+
+Login Screen → user enters username/password
+
+AppTabs (after login)
+
+Home Tab → product list with infinite scroll
+
+Favorites Tab (placeholder) → future products saved by user
+
+Profile Tab (placeholder) → future user settings
+
+Product Screen → pushed on stack when a product is clicked
+
+Screens
+Login Screen
+
+Minimal, centered form
+
+Inputs: Username, Password
+
+Login button (primary color background, full width, rounded corners)
+
+Subtle illustration or logo on top
+
+Show error below button if login fails
+
+Home Screen (Product List)
+
+Header: “Shoply” or logo
+
+FlatList with cards:
+
+Image on top
+
+Product title below
+
+Small price text
+
+Infinite scroll loader at the bottom
+
+Error state (retry button)
+
+Product Details Screen
+
+Big product image on top
+
+Title (editable via modal) + description
+
+Button “Edit Title” → triggers modal
+
+Modal (Edit Product)
+
+Reanimated slide-up modal
+
+Rounded corners
+
+Input field for editing title
+
+Save / Cancel buttons
+
+Smooth close animation on success
+
+3. Color Palette & Typography
+Colors
+
+Primary: #4A90E2 (blue – trust & modern)
+
+Secondary: #50E3C2 (teal – fresh accent)
+
+Background: #F5F7FA (light gray)
+
+Card background: #FFFFFF (white with shadow)
+
+Text Primary: #333333
+
+Text Secondary: #777777
+
+Error: #E74C3C
+
+Typography
+
+Use Inter or Roboto (system-friendly, clean)
+
+Headings: Semi-bold (18–22px)
+
+Body text: Regular (14–16px)
+
+Buttons: Bold, all caps, white text on primary background
+
+4. Extra UI/UX Criteria
+
+✅ Consistency: use same padding & spacing (16px base).
+✅ Feedback: loader, error, empty states.
+✅ Animations: smooth modal, maybe slight card hover/press animation.
+✅ Dark Mode (bonus): optional if you want to impress.
