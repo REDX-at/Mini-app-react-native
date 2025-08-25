@@ -3,12 +3,19 @@ import React from "react";
 import { Provider } from "react-redux";
 import { store } from "./src/store";
 // import AppNavigator from "./src/app/AppNavigator";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+
+import GlobalModal from "./src/components/GlobalModal";
+
 import AuthGate from "./src/app/AuthGate";
 
 export default function App() {
   return (
     <Provider store={store}>
-      <AuthGate />
+      <SafeAreaProvider>
+        <AuthGate />
+        <GlobalModal />
+      </SafeAreaProvider>
     </Provider>
   );
 }

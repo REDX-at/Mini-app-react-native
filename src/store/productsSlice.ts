@@ -51,6 +51,15 @@ const productsSlice = createSlice({
       state.hasMore = true;
       state.error = undefined;
     },
+    updateProduct: (
+      state,
+      action: PayloadAction<{ id: number; title: string }>
+    ) => {
+      const index = state.items.findIndex((p) => p.id === action.payload.id);
+      if (index !== -1) {
+        state.items[index].title = action.payload.title;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -81,5 +90,5 @@ const productsSlice = createSlice({
   },
 });
 
-export const { resetProducts } = productsSlice.actions;
+export const { updateProduct, resetProducts } = productsSlice.actions;
 export default productsSlice.reducer;

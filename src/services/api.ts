@@ -25,18 +25,6 @@ api.interceptors.request.use(async (config) => {
 import { store } from "../store";
 import { logoutThunk } from "../store/authSlice";
 
-// api.interceptors.response.use(
-//   (response) => response,
-//   async (error) => {
-//     if (error.response?.status === 401) {
-//       console.log("401 detected — logging out user");
-//       await AsyncStorage.removeItem("accessToken");
-//       store.dispatch(logoutThunk()); // redirect to login
-//     }
-//     return Promise.reject(error);
-//   }
-// );
-
 api.interceptors.response.use(
   (response) => response,
   async (error) => {
@@ -44,7 +32,7 @@ api.interceptors.response.use(
 
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true; // prevent infinite loop
-
+      console.log("401 response, attempting token refresh");
       const refreshToken = await AsyncStorage.getItem("refreshToken");
       if (!refreshToken) {
         store.dispatch(logoutThunk());

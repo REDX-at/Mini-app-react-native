@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { View, TextInput, Button, Text } from "react-native";
 import { useAppDispatch, useAppSelector } from "../store";
 import { loginThunk } from "../store/authSlice";
+import { SafeAreaView } from "react-native-safe-area-context";
 
 export default function LoginScreen() {
   const dispatch = useAppDispatch();
@@ -14,9 +15,8 @@ export default function LoginScreen() {
   const handleLogin = () => {
     dispatch(loginThunk({ username, password }));
   };
-
   return (
-    <View style={{ padding: 20 }}>
+    <SafeAreaView style={{ padding: 20 }}>
       <TextInput
         placeholder="Username"
         value={username}
@@ -35,6 +35,6 @@ export default function LoginScreen() {
         onPress={handleLogin}
       />
       {error && <Text style={{ color: "red" }}>{error}</Text>}
-    </View>
+    </SafeAreaView>
   );
 }

@@ -4,13 +4,13 @@ import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 // Import slices (we’ll create them later)
 import authReducer from "./authSlice";
 import productsReducer from "./productsSlice";
-// import uiReducer from "./uiSlice";
+import uiReducer from "./uiSlice";
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
     products: productsReducer,
-    // ui: uiReducer,
+    ui: uiReducer,
   },
 });
 

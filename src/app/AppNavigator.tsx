@@ -1,85 +1,76 @@
-import React, { useEffect } from "react";
-import { NavigationContainer } from "@react-navigation/native";
+import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import { ActivityIndicator, View } from "react-native";
+import { NavigationContainer } from "@react-navigation/native";
 
-import { useAppDispatch, useAppSelector } from "../store";
-import { initAuthThunk } from "../store/authSlice";
-
-import LoginScreen from "../screens/LoginScreen";
 import HomeScreen from "../screens/HomeScreen";
-import PlaceholderScreen from "../screens/PlaceholderScreen";
 import ProductDetailsScreen from "../screens/ProductDetailsScreen";
-import { Ionicons } from "@expo/vector-icons"; // or 'react-native-vector-icons/Ionicons'
+import PlaceholderScreen from "../screens/PlaceholderScreen";
+import { Ionicons } from "@expo/vector-icons";
+import ProfileScreen from "../screens/ProfileScreen";
 
-const Stack = createNativeStackNavigator();
-const Tabs = createBottomTabNavigator();
+export type RootStackParamList = {
+  Tabs: undefined;
+  ProductDetails: { id: number };
+};
+
+const Stack = createNativeStackNavigator<RootStackParamList>();
+const Tab = createBottomTabNavigator();
 
 function AppTabs() {
   return (
-    <Tabs.Navigator
+    <Tab.Navigator
       screenOptions={({ route }) => ({
-        tabBarIcon: ({ focused, color, size }) => {
-          let iconName;
+        headerShown: false, // 🔴 hides the top header for ALL tabs
 
-          if (route.name === "Home") {
-            iconName = focused ? "home" : "home-outline";
-          } else if (route.name === "Settings") {
-            iconName = focused ? "settings" : "settings-outline";
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName: keyof typeof Ionicons.glyphMap;
+
+          switch (route.name) {
+            case "Home":
+              iconName = focused ? "home" : "home-outline";
+              break;
+            case "Rechercher":
+              iconName = focused ? "search" : "search-outline";
+              break;
+            case "Vendre":
+              iconName = focused ? "add-circle" : "add-circle-outline";
+              break;
+            case "Notifications":
+              iconName = focused ? "notifications" : "notifications-outline";
+              break;
+            case "Profil":
+              iconName = focused ? "person" : "person-outline";
+              break;
+            default:
+              iconName = "ellipse"; // fallback
           }
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: "tomato",
-        tabBarInactiveTintColor: "gray",
+        tabBarActiveTintColor: "#007AFF", // color for active tab
+        tabBarInactiveTintColor: "gray", // color for inactive tab
       })}
     >
-      <Tabs.Screen name="Home" component={HomeScreen} />
-      <Tabs.Screen name="Settings" component={PlaceholderScreen} />
-    </Tabs.Navigator>
+      <Tab.Screen name="Home" component={HomeScreen} />
+      <Tab.Screen name="Rechercher" component={PlaceholderScreen} />
+      <Tab.Screen name="Vendre" component={PlaceholderScreen} />
+      <Tab.Screen name="Notifications" component={PlaceholderScreen} />
+      <Tab.Screen name="Profil" component={ProfileScreen} />
+    </Tab.Navigator>
   );
 }
 
 export default function AppNavigator() {
-  const dispatch = useAppDispatch();
-  const { token, initialized } = useAppSelector((s) => s.auth);
-
-  useEffect(() => {
-    dispatch(initAuthThunk());
-  }, [dispatch]);
-  if (!initialized) {
-    return (
-      <View style={{ flex: 1, alignItems: "center", justifyContent: "center" }}>
-        <ActivityIndicator />
-      </View>
-    );
-  }
-
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {token ? (
-          <>
-            <Stack.Screen
-              name="AppTabs"
-              component={AppTabs}
-              options={{ headerShown: false }}
-            />
-            {/* product details pushed from Home */}
-
-            <Stack.Screen
-              name="ProductDetails"
-              component={ProductDetailsScreen}
-            />
-          </>
-        ) : (
-          <Stack.Screen
-            name="Login"
-            component={LoginScreen}
-            options={{ headerShown: false }}
-          />
-        )}
+        <Stack.Screen
+          name="Tabs"
+          component={AppTabs}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen name="ProductDetails" component={ProductDetailsScreen} />
       </Stack.Navigator>
     </NavigationContainer>
   );
