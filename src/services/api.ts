@@ -22,8 +22,14 @@ api.interceptors.request.use(async (config) => {
   return config;
 });
 
-import { store } from "../store";
-import { logoutThunk } from "../store/authSlice";
+// import { store } from "../store";
+// import { logoutThunk } from "../store/authSlice";
+type LogoutCallback = () => void;
+let logoutCallback: LogoutCallback | null = null;
+
+export function setLogoutCallback(cb: LogoutCallback) {
+  logoutCallback = cb;
+}
 
 api.interceptors.response.use(
   (response) => response,
@@ -35,7 +41,8 @@ api.interceptors.response.use(
       console.log("401 response, attempting token refresh");
       const refreshToken = await AsyncStorage.getItem("refreshToken");
       if (!refreshToken) {
-        store.dispatch(logoutThunk());
+        // store.dispatch(logoutThunk());
+        logoutCallback?.(); // call the callback instead of importing store
         return Promise.reject(error);
       }
 
@@ -57,7 +64,8 @@ api.interceptors.response.use(
         // Refresh failed → logout
         await AsyncStorage.removeItem("accessToken");
         await AsyncStorage.removeItem("refreshToken");
-        store.dispatch(logoutThunk());
+        // store.dispatch(logoutThunk());
+        logoutCallback?.(); // call the callback instead of importing store
         return Promise.reject(refreshError);
       }
     }

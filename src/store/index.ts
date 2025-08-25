@@ -2,9 +2,10 @@ import { configureStore } from "@reduxjs/toolkit";
 import { useDispatch, useSelector, TypedUseSelectorHook } from "react-redux";
 
 // Import slices (we’ll create them later)
-import authReducer from "./authSlice";
+import authReducer, { logoutThunk } from "./authSlice";
 import productsReducer from "./productsSlice";
 import uiReducer from "./uiSlice";
+import { setLogoutCallback } from "../services/api";
 
 export const store = configureStore({
   reducer: {
@@ -13,6 +14,8 @@ export const store = configureStore({
     ui: uiReducer,
   },
 });
+
+setLogoutCallback(() => store.dispatch(logoutThunk()));
 
 // Types
 export type RootState = ReturnType<typeof store.getState>;

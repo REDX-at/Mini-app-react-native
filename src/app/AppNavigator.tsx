@@ -12,6 +12,7 @@ import ProfileScreen from "../screens/ProfileScreen";
 export type RootStackParamList = {
   Tabs: undefined;
   ProductDetails: { id: number };
+  Profile: undefined;
 };
 
 const Stack = createNativeStackNavigator<RootStackParamList>();
@@ -56,7 +57,7 @@ function AppTabs() {
       <Tab.Screen name="Rechercher" component={PlaceholderScreen} />
       <Tab.Screen name="Vendre" component={PlaceholderScreen} />
       <Tab.Screen name="Notifications" component={PlaceholderScreen} />
-      <Tab.Screen name="Profil" component={ProfileScreen} />
+      <Tab.Screen name="Profile" component={ProfileScreen} />
     </Tab.Navigator>
   );
 }

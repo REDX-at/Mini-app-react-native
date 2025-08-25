@@ -162,6 +162,7 @@ const authSlice = createSlice({
 
       // logout
       .addCase(logoutThunk.fulfilled, (state) => {
+        console.log("Logged out, clearing state");
         state.user = null;
         state.token = null;
         state.status = "idle";
